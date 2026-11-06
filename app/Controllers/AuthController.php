@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Cliniva\Controllers;
 
 use Cliniva\Core\Controller;
-use Cliniva\Core\Config;
 use Cliniva\Core\Response;
 use Cliniva\Models\User;
 use Cliniva\Services\AuthService;
@@ -91,7 +90,7 @@ final class AuthController extends Controller
             Response::redirect('/login');
         }
 
-        if ($user['role'] === 'admin' && Config::get('security.admin_2fa_enabled', true)) {
+        if ($user['role'] === 'admin') {
             $_SESSION['pending_2fa_user_id'] = (int) $user['id'];
             session_regenerate_id(true);
 
@@ -262,11 +261,6 @@ final class AuthController extends Controller
 
     private function pendingTwoFactorUser(): array
     {
-        if (!Config::get('security.admin_2fa_enabled', true)) {
-            unset($_SESSION['pending_2fa_user_id'], $_SESSION['pending_2fa_secret']);
-            Response::redirect('/login');
-        }
-
         $id = (int) ($_SESSION['pending_2fa_user_id'] ?? 0);
         if ($id <= 0) {
             Response::redirect('/login');
