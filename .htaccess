@@ -1,0 +1,15 @@
+Options -Indexes +FollowSymLinks
+RewriteEngine On
+
+RewriteRule ^\.well-known/acme-challenge/ - [END]
+RewriteRule ^public(?:/|$) - [F,END]
+RewriteRule ^(?:app|bin|config|database|docs|cron|storage|vendor)(?:/|$) - [F,END]
+RewriteRule (^|/)\. - [F,END]
+RewriteRule ^(?:composer\.(?:json|lock)|README(?:\.MD)?|.*\.headers)$ - [F,END]
+RewriteCond %{THE_REQUEST} \s/+.*\.php(?:[?\s]) [NC]
+RewriteRule \.php(?:/|$) - [F,END]
+RewriteRule ^assets/(.*)$ public/assets/$1 [END]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [QSA,L]
