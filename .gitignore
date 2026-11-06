@@ -147,3 +147,14 @@ vite.config.ts.timestamp-*
 
 # Turbo Repo
 .turbo
+
+# Cliniva local and patient data
+/vendor/
+/database/seed.sql
+/tmp_verify_patient.php
+/storage/backups/*.sql
+/storage/backups/*.sql.*
+/storage/logs/*
+!/storage/logs/.gitkeep
+/storage/uploads/*
+!/storage/uploads/.gitkeep
